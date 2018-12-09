@@ -1,53 +1,37 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Constants, Location, Permissions} from 'expo';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import firebase from 'firebase';
+import Navigator from './src/components/Navigator';
+import reducers from './src//reducers';
 
-export default class App extends React.Component {
-  state = {
-  location: null,
-errorMessage: null,
-};
-componentWillMount() {
-  this.getLocationAsync();
+class App extends Component {
+  state = { loggedIn: null }
 
-
-  const apiKey = 'a515beac07f21a6bc8ecbb71c8c4c525';
-axios.get(`https://api.openweathermap.org/data/2.5/weather?q={location}&appid=${apiKey}`)
-.then(res => {
-  console.log(res);
-});
-}
-
-getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
-    }
-
-   let location = await Location.getCurrentPositionAsync({});
-   this.setState({location});
-
-   console.log(location);
-
-};
-
+  componentWillMount() {
+    const config = {
+    apiKey: "AIzaSyCeOZRgbtjPmvkOslGbGXDTJMUpWTlfJEE",
+    authDomain: "its-lit-47d1a.firebaseapp.com",
+    databaseURL: "https://its-lit-47d1a.firebaseio.com",
+    projectId: "its-lit-47d1a",
+    storageBucket: "its-lit-47d1a.appspot.com",
+    messagingSenderId: "300038339200"
+  };
+  firebase.initializeApp(config);
+  }
   render() {
+    const store = createStore(reducers, {}, compose(
+      applyMiddleware(thunk)
+    )
+    );
+
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working!</Text>
-      </View>
+      <Provider store={store}>
+        <Navigator />
+     </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
