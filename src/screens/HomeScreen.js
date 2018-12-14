@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Button } from 'native-base';
 
 class HomeScreen extends Component {
-  state = {
+  /*state = {
     accelerometerData: {},
   }
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 });
-/*  state = {
+*/  state = {
   region: null,
 errorMessage: null,
 };
@@ -122,7 +122,7 @@ onButtonPress = () => {
     const latString = JSON.stringify(userLat);
     const lonString = JSON.stringify(userLon);
       const apiKey = 'a515beac07f21a6bc8ecbb71c8c4c525';
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latString}&lon=${lonString}appid=${apiKey}`)
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=Loappid=Lonndon,uk&${apiKey}`)
     .then(res => {
       console.log(res);
     });
@@ -173,5 +173,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-*/
+
 export default HomeScreen;

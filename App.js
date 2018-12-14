@@ -4,22 +4,22 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import firebase from 'firebase';
 import Navigator from './src/components/Navigator';
-import reducers from './src//reducers';
+import reducers from './src/reducers';
 
 class App extends Component {
   state = { loggedIn: null }
 
   componentWillMount() {
     const config = {
-    apiKey: "AIzaSyCeOZRgbtjPmvkOslGbGXDTJMUpWTlfJEE",
-    authDomain: "its-lit-47d1a.firebaseapp.com",
-    databaseURL: "https://its-lit-47d1a.firebaseio.com",
-    projectId: "its-lit-47d1a",
-    storageBucket: "its-lit-47d1a.appspot.com",
-    messagingSenderId: "300038339200"
-  };
-  firebase.initializeApp(config);
-  }
+      apiKey: "AIzaSyBnChyQHTLQ0XTMkw9T_dKvOO8uv32MOYg",
+   authDomain: "skiapp-ce9d8.firebaseapp.com",
+   databaseURL: "https://skiapp-ce9d8.firebaseio.com",
+   projectId: "skiapp-ce9d8",
+   storageBucket: "skiapp-ce9d8.appspot.com",
+   messagingSenderId: "509846412712"
+ };
+ firebase.initializeApp(config);
+}
   render() {
     const store = createStore(reducers, {}, compose(
       applyMiddleware(thunk)
