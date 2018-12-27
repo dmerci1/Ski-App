@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import UserLocationScreen from '../screens/UserLocationScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import DogList from '../screens/DogList';
+import AddDog from '../screens/AddDog';
 import MapScreen from '../screens/MapScreen';
 
 const AuthNav = createBottomTabNavigator({
@@ -26,8 +27,8 @@ const AuthNav = createBottomTabNavigator({
 const HomeNav = createBottomTabNavigator({
 auth: AuthNav,
  home: HomeScreen,
- locations: UserLocationScreen,
- map: MapScreen
+ locations: DogList,
+ map: AddDog
 });
 
 

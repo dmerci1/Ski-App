@@ -4,11 +4,32 @@ import {
   LOCATION_CREATE,
   LOCATIONS_FETCH_SUCCESS,
   DOG_SAVE_SUCCESS,
-  DOGS_FETCH_SUCCESS
+  DOGS_FETCH_SUCCESS,
+   DOG_UPDATE,
+DOG_CREATE
 
 
 } from './types';
 
+export const dogUpdate = ({ prop, value }) => {
+  return {
+    type: DOG_UPDATE,
+    payload: { prop, value }
+  };
+};
+
+export const dogCreate = ({ name, breed, gender, age, bio, phone, navigationProps }) => {
+    const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/dogs`)
+    .push({ name, breed, gender, age, bio, phone })
+    .then(() => {
+      dispatch({ type: DOG_CREATE });
+      navigationProps.navigate('doglist');
+  });
+  };
+};
 export const locationUpdate = ({ prop, value }) => {
   return {
     type: LOCATION_UPDATE,
@@ -37,7 +58,7 @@ export const fetchLocations = () => {
     firebase.database().ref('/locations')
       .on('value', snapshot => {
         dispatch({ type: LOCATIONS_FETCH_SUCCESS, payload: snapshot.val() });
-      
+
             console.log(snapshot.val())
 
       });
@@ -47,7 +68,7 @@ export const fetchDogs = () => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-    firebase.database().ref('//dogs')
+     firebase.database().ref(`/users/${currentUser.uid}/dogs`)
       .on('value', snapshot => {
         dispatch({ type: DOGS_FETCH_SUCCESS, payload: snapshot.val() });
       });

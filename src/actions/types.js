@@ -16,3 +16,5 @@ export const LOCATIONS_FETCH_SUCCESS = 'locations_fetch_success';
 export const DOG_SAVE_SUCCESS = 'dog_save_success';
 
 export const DOGS_FETCH_SUCCESS = 'dogs_fetch_success';
+export const DOG_UPDATE = 'dog_update';
+export const DOG_CREATE = 'dog_create';

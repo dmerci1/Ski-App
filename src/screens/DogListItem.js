@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, Image } from 'react-native';
 import { List, ListItem } from 'native-base';
 
 class DogListItem extends Component {
@@ -20,7 +20,8 @@ class DogListItem extends Component {
     return (
       <List>
         <ListItem onPress={this.onRowPress}>
-          <Text>Hello</Text>
+          <Text>{ dog.name }</Text>
+          
         </ListItem>
       </List>
     );

@@ -1,4 +1,6 @@
 import {
+  DOG_UPDATE,
+  DOG_CREATE,
   LOCATION_UPDATE,
   LOCATION_CREATE,
   USER_DOG_CREATE,
@@ -16,9 +18,9 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOCATION_UPDATE:
+    case DOG_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
-    case LOCATION_CREATE:
+    case DOG_CREATE:
       return INITIAL_STATE;
     case USER_DOG_CREATE:
       return { ...state, INITIAL_STATE };

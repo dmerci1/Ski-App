@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, Text } from 'react-native';
-import { Container, Content, Header, Button, Left, Body } from 'native-base';
+import { Container, Content, Header, Button, Left, Body, Icon } from 'native-base';
 import { fetchDogs } from '../actions';
 import DogListItem from './DogListItem';
 
@@ -14,7 +14,6 @@ class DogList extends Component {
 }
   componentWillMount() {
     this.props.fetchDogs();
-    console.log('hello');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +27,19 @@ class DogList extends Component {
     console.log(this.props);
     return (
       <Container>
-
+          <Header style={{ height: 80, backgroundColor: '#03a5f0'  }}>
+            <Left>
+              <Button
+              transparent
+              onPress={() => this.props.navigation.navigate('swipe')}
+              >
+              <Icon name='arrow-back' type='MaterialIcons' />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Dogs List</Text>
+            </Body>
+          </Header>
           <Content>
             <FlatList
               data={this.props.dogs}
@@ -43,7 +54,12 @@ class DogList extends Component {
               }
               keyExtractor={(item, index) => item.uid}
             />
-
+            <Button
+            block
+            onPress={() => this.props.navigation.navigate('newdog')}
+            >
+              <Text>Add Dog</Text>
+            </Button>
         </Content>
       </Container>
     );
@@ -56,7 +72,6 @@ const mapStateToProps = state => {
   });
 
   return { dogs };
-
 };
 
 export default connect(mapStateToProps, { fetchDogs })(DogList);
