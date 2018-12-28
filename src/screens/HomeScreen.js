@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Platform, Text, View, TouchableOpacity } from 'react-native';
 import { Constants, Location, Permissions, Accelerometer } from 'expo';
 import axios from 'axios';
-import firebase from 'firebase';
-import { Button } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, Button } from 'native-base';
 import Weather from '../components/weather';
 
 class HomeScreen extends Component {
@@ -24,11 +23,9 @@ class HomeScreen extends Component {
 
   componentWillMount() {
     const apiKey = 'a515beac07f21a6bc8ecbb71c8c4c525';
-    const { currentUser } = firebase.auth();
 
      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=london,uk&appid=${apiKey}`)
      .then(res => {
-       firebase.database().push(`/users/${currentUser.uid}/res`)
        console.log(res);
      });
 
@@ -38,7 +35,6 @@ class HomeScreen extends Component {
       });
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          this.fetchWeather(position.coods.latitude, position.coords.longitude);
           this.setState({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -46,7 +42,6 @@ class HomeScreen extends Component {
             speed: position.coords.speed,
             errorMessage: null,
           });
-           firebase.database().push(`/users/${currentUser.uid}/res`)
         },
         (error) => this.setState({ error: error.message}),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
@@ -63,18 +58,27 @@ class HomeScreen extends Component {
 
 
     return (
-      <View>
-      <View style={styles.sensor}>
+      <Container>
+        <Header style={{ backgroundColor: '#1da1f2', height: 60 }}>
+          <Left />
+            <Body>
+              <Text style={{ color: 'white', fontSize: 20}}>SkiRection</Text>
+            </Body>
+          <Right />
+        </Header>
+
+      <Content style={styles.sensor}>
         <Text>Accelerometer:</Text>
         <Text>x: {round(x)} y: {round(y)} z: {round(z)}</Text>
-        </View>
+
         <Text>Latitude: {this.state.latitude}</Text>
         <Text>Longitude: {this.state.longitude}</Text>
         <Text>Altitude: {this.state.altitude}</Text>
         <Text>Speed: {this.state.speed}</Text>
-        <Text>Temp: {this.state.temp}</Text>
 <Weather />
-      </View>
+    </Content>
+  </Container>
+
     );
   }
 }
